@@ -24,6 +24,7 @@ public class BankAccount{
     }
 
     public static void main(String[] args){
+        System.out.println();                   //start on a new line
         BankAccount account = new BankAccount();
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the account holder name: ");
@@ -32,6 +33,7 @@ public class BankAccount{
         account.accountNumber = input.nextInt();
         System.out.println("Enter the initial balance: ");
         account.balance = input.nextDouble();
+        System.out.println();                   
         account.deposit(500);
         account.withdraw(100);
         account.displayAccountDetails();
