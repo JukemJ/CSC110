@@ -7,10 +7,12 @@ public class License{
     int expirationYear;
 
     public License(String name, String address, int age, int expirationYear){
-        name = name;
-        address = address;
-        age = age;
-        expirationYear = expirationYear;
+        this.name = name;
+        this.address = address;
+        this.age = age;
+        this.expirationYear = expirationYear;
+        System.out.println("License created!");
+        displayLicenseDetails();
     }
 
     public void displayLicenseDetails(){
@@ -22,18 +24,19 @@ public class License{
 
     public void renew(){
         expirationYear += 7;
-        System.out.println("License renewed!");
+        System.out.println("\nLicense renewed!");
+        displayLicenseDetails();
     }
 
     public void birthday(){
         age++;
-        System.out.println("Happy Birthday!");
+        System.out.println("\nHappy Birthday!");
+        displayLicenseDetails();
     }
 
     public static void main(String[] args){
-        System.out.println();                   //start on a new line
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter your name: ");
+        System.out.println("\nEnter your name: ");
         String name = input.nextLine();
         System.out.println("Enter your address: ");
         String address = input.nextLine();
@@ -42,6 +45,7 @@ public class License{
         System.out.println("Enter the expiration year: ");
         int expirationYear = input.nextInt();
         License license = new License(name, address, age, expirationYear);
-
+        license.renew();
+        license.birthday();
     }
 }
