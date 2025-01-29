@@ -10,6 +10,7 @@ public class RomanNumerals {
         String[] romanNumerals ={"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
         if(number < 1 || number > 10) System.out.println("Invalid number");
         else System.out.println("Roman numeral: " + romanNumerals[number - 1]);
+        scanner.close();
     }
 }
 

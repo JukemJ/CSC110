@@ -11,5 +11,6 @@ public class Oreos{
     int cookies = input.nextInt();
     double calories = cookies * caloriesPerCookie;
     System.out.println("You consumed " + calories + ".");
+    input.close();
   }
 }

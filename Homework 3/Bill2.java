@@ -16,7 +16,7 @@ public class Bill2
       System.out.println("Tax: " + (mealCost * taxRate / 100));
       System.out.println("Tip: " + (mealCost * tipPercentage / 100));
       System.out.println("Total: $" + ((mealCost + (mealCost * taxRate / 100) + (mealCost * tipPercentage / 100))));
-
+      input.close();
    }
 
 }

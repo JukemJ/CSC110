@@ -17,5 +17,6 @@ public class FatGramCalculator {
         else if(fatGrams * 9 < calories / 3){
             System.out.println("The food is low in fat");
         }
+        input.close();
     }
 }

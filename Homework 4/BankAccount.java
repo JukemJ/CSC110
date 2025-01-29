@@ -39,5 +39,6 @@ public class BankAccount{
         account.deposit(500);
         account.withdraw(100);
         account.displayAccountDetails();
+        input.close();
     }
 }

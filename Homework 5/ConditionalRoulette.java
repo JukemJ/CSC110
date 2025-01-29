@@ -15,5 +15,6 @@ public class ConditionalRoulette {
         else if(number <= 29) color = number % 2 == 0 ? "black" : "red";
         else if(number <= 36) color = number % 2 == 0 ? "red" : "black";
         System.out.println(color);
+        input.close();
     }
 }

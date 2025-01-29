@@ -49,5 +49,6 @@ public class License{
         License license = new License(name, address, age, expirationYear);
         license.renew();
         license.birthday();
+        input.close();
     }
 }
