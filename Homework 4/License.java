@@ -1,3 +1,5 @@
+// Chris Dixon
+
 import java.util.Scanner;
 
 public class License{
