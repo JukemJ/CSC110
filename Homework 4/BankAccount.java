@@ -1,12 +1,19 @@
 // Chris Dixon
 
+
 import java.util.Scanner; 
 
 public class BankAccount{
-    String accountHolderName;
-    int accountNumber;
-    double balance;
+    private String accountHolderName;
+    private int accountNumber;
+    private double balance;
 
+    public BankAccount (String accountHolderName, int accountNumber, double balance){
+        this.accountHolderName = accountHolderName;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+    
     public void deposit(double amount){
         balance += amount;
     }
@@ -27,15 +34,17 @@ public class BankAccount{
 
     public static void main(String[] args){
         System.out.println();                   //start on a new line
-        BankAccount account = new BankAccount();
+        
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the account holder name: ");
-        account.accountHolderName = input.nextLine();
+        String accountHolderName = input.nextLine();
         System.out.println("Enter the account number: ");
-        account.accountNumber = input.nextInt();
+        int accountNumber = input.nextInt();
         System.out.println("Enter the initial balance: ");
-        account.balance = input.nextDouble();
-        System.out.println();                   
+        double balance = input.nextDouble();
+        System.out.println();
+                           
+        BankAccount account = new BankAccount(accountHolderName, accountNumber, balance);
         account.deposit(500);
         account.withdraw(100);
         account.displayAccountDetails();
