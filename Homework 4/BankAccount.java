@@ -1,5 +1,8 @@
-// Chris Dixon
-
+/**
+ * @author: Chris Dixon
+ * @date: 02/4/2025
+ * @description: This program creates a bank account object with a name, account number, and balance.
+ */
 
 import java.util.Scanner; 
 
