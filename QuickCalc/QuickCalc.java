@@ -12,7 +12,7 @@ public class QuickCalc {
         if(evenNumbers.contains(number.substring(number.length()-1))) return true;
         return false;
     }
-
+    
     private boolean divisibleByThree(String number){
         int sum = 0;
         for (int i = 0; i < number.length(); i++){

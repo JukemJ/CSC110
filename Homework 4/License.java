@@ -1,7 +1,5 @@
 // Chris Dixon
 
-import java.util.Scanner;
-
 public class License{
     String name;
     String address;
