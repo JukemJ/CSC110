@@ -7,7 +7,7 @@ public class Hand {
     
     public Hand() {
         String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-        String[] suits = {"♠", "♣", "♥", "♦"};
+        String[] suits = {"S", "C", "H", "D"};
         ArrayList<String> cards = new ArrayList<String>();
         ArrayList<String> deck = new ArrayList<String>();
         for(int i = 0; i < 4; i++) {
@@ -25,23 +25,23 @@ public class Hand {
     }
 
     public void display() {
-        System.out.print("Your hand: ");
-        for(let i = 0; i < cards.size(); i++) {
+        System.out.print("\n\nYour hand: ");
+        for(int i = 0; i < cards.size(); i++) {
             System.out.print(cards.get(i) + " ");
         }
-        System.out.println();
+        System.out.println("\n");
     }
 
     public void play(int index){
-        System.out.println("You played " + this.cards.get(index)" !");
+        System.out.println("You played " + this.cards.get(index) + " !");
         this.cards.remove(index);
         this.display();
 
     }
 
     public void discard(int index){
-        System.out.println("You discarded " + this.cards.get(index)" !");
-        hand.remove(index);
+        System.out.println("You discarded " + this.cards.get(index) + " !");
+        this.cards.remove(index);
         this.display();
     }
     
@@ -51,28 +51,29 @@ public class Hand {
         Scanner input = new Scanner(System.in);
         Hand hand = new Hand();
         hand.display();
-        while(1){
-            System.out.println("1. Play\n2. Discard\n3. Quit");
+        while(true){
+            System.out.println("\n1. Play\n2. Discard\n3. Quit");
             int choice = input.nextInt();
             switch (choice){
                 case 1:
                     System.out.println("Enter the index of the card you want to play: ");
-                    int index = input.nextInt();
-                    hand.play(index);
+                    //int index = ;
+                    hand.play(input.nextInt());
                     break;
                 case 2:
                     System.out.println("Enter the index of the card you want to discard: ");
-                    int index = input.nextInt();
-                    hand.discard(index);
+                    //int index = ;
+                    hand.discard(input.nextInt());
                     break;
                 case 3: 
-                    System.out.println("Goodbye!");
+                    System.out.println("\nGoodbye!");
+                    input.close();
                     System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid choice");
             }
-            input.close();
-        }     
+            
+        }   
     }
 }

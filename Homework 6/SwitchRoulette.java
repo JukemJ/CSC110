@@ -1,10 +1,12 @@
 // Chris Dixon
-import.java.util.Scanner;
+import java.util.Scanner;
 
 public class SwitchRoulette {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        System.out.println("\n\nEnter a number between 0 and 36: ");
         int number = input.nextInt();
+        System.out.println();
         switch(number) {
             case 1:
                 System.out.println("red");
@@ -115,9 +117,10 @@ public class SwitchRoulette {
                 System.out.println("red");
                 break;
             default:
-                System.out.println("greem");
+                System.out.println("green");
             
         }
         input.close();
+        System.exit(0);
     }
 }
