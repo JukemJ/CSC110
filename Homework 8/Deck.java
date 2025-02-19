@@ -40,7 +40,6 @@ public class Deck {
         for(int i = 0; i < cards.size(); i++) {
             cardsInDeck += cards.get(i) + ", ";
         }
-        //String output = 
         return String.format("\nYour deck has: %d cards\nThey are: %s\n", cards.size(), cardsInDeck);
     }
 

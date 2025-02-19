@@ -57,19 +57,20 @@ public class Hand {
             switch (choice){
                 case 1:
                     System.out.println("Enter the index of the card you want to play: ");
-                    //int index = ;
                     hand.play(input.nextInt());
                     break;
+
                 case 2:
                     System.out.println("Enter the index of the card you want to discard: ");
-                    //int index = ;
                     hand.discard(input.nextInt());
                     break;
+
                 case 3: 
                     System.out.println("\nGoodbye!");
                     input.close();
                     System.exit(0);
                     break;
+
                 default:
                     System.out.println("Invalid choice");
             }
