@@ -1,0 +1,31 @@
+body{
+    background-image: url("images/tile.gif");
+    /* background-color: black; */
+    color: white;
+}
+h1{
+    font-family: "Comic Neue", serif;
+    font-weight: 700;
+    color: red;
+}
+
+ .linkz{
+    /* height: 50px; */
+    width: 100px;
+} 
+
+#rocket{
+    transform: rotate(301deg);
+    height: auto;
+    width: 100px;
+    display: inline-block;
+}
+
+#eternal-atake{
+
+    position:fixed;
+    right: 0px;
+    bottom: 0px;
+    height: 200px;
+    width: auto;
+}

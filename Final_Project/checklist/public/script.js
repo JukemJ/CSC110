@@ -16,7 +16,7 @@ for(let x of document.getElementsByClassName('completeButton')){
     }
 }
 
-
+// Creates a new Task to be added to the checklist
 async function createNewTask(){
     taskText = document.getElementById('newTaskText').value;
     const task = {completed: false, color: "none", text: taskText}
@@ -32,6 +32,7 @@ async function createNewTask(){
         const checklist = document.getElementById('checklist');
         checklist.appendChild(createTaskDiv(taskText));
         console.log('New Task Created!');
+        document.getElementById('newTaskText').value = "";
     }
     else {
         alert('Failed to create new task!');
@@ -40,10 +41,12 @@ async function createNewTask(){
     
 }
 
+
+// Creates a new task element for createNewTask()
 function createTaskDiv(taskText) {
     // Create the main container div
     const taskDiv = document.createElement('div');
-    taskDiv.className = 'tasks row justify-content-around my-2';
+    taskDiv.className = 'tasks row justify-content-around my-2 border-bottom pb-2';
     taskDiv.id = 'checklist';
 
     // Create the "Complete" button
@@ -71,6 +74,7 @@ function createTaskDiv(taskText) {
     return taskDiv;
 }
 
+// Deletes a task from the checklist
 async function deleteTask(){
     const taskText = this.parentElement.querySelector('.task-text').textContent;
     const response = await fetch("/delete", {
@@ -91,6 +95,7 @@ async function deleteTask(){
     }
 }
 
+// Marks a task as complete
 async function markTaskComplete(){
     const taskText = this.parentElement.querySelector('.task-text');
     const completeBtn = this.parentElement.querySelector('.btn-warning');
@@ -118,6 +123,7 @@ async function markTaskComplete(){
     }
 }
 
+// Marks a task as incomplete
 async function markTaskIncomplete(){
     const taskText = this.parentElement.querySelector('.task-text');
     const completeBtn = this.parentElement.querySelector('.btn-success');

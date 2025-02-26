@@ -60,6 +60,7 @@ app.post('/complete', (req, res) => {
     });
 });
 
+// Incomplete tasks
 app.post('/incomplete', (req, res) => {
     let obj = DB.tasks.find(task => task.text == req.body.text);
     obj.completed = false;
