@@ -14,15 +14,17 @@ public class Number {
         while (randomNumber != guessedNumber) {
             System.out.print("Enter your guess: ");
             guessedNumber = input.nextInt();
-            if (guessedNumber < randomNumber) System.out.println("\nToo low, try again.");
-            if (guessedNumber > randomNumber) System.out.println("\nToo high, try again.");
-            if (guessedNumber == randomNumber){
+            if (guessedNumber < randomNumber)
+                System.out.println("\nToo low, try again.");
+            if (guessedNumber > randomNumber)
+                System.out.println("\nToo high, try again.");
+            if (guessedNumber == randomNumber) {
                 System.out.println("You guessed it!");
                 System.out.printf("It took you %d tries to guess the number.\n", tries);
             }
             tries++;
         }
-        
+
         input.close();
         System.exit(0);
     }

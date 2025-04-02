@@ -18,7 +18,7 @@ public class Deck {
             }
         }
         this.cards = cards;
-        this.shuffle();
+        //this.shuffle();
     }
 
     public void shuffle(){
@@ -30,9 +30,10 @@ public class Deck {
         this.cards = temp;
     }
 
-    public void draw(){
+    public String drawCard(){
         String card = cards.remove(0);
         System.out.println("\nYou drew: " + card);
+        return card;
     }
 
     public String toString(){
@@ -54,7 +55,7 @@ public class Deck {
             int choice = input.nextInt();
             switch (choice){
                 case 1:
-                    deck.draw();
+                    deck.drawCard();
                     break;
                 case 2:
                     deck.shuffle();
