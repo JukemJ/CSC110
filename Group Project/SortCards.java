@@ -7,7 +7,9 @@ public class SortCards {
 
     Deck deck = new Deck(52);
 
-    Hand hand = new Hand(13); // bridge hand
+    //this is hardcoded a couple of times
+    //this should be changed to allow different hand sizes for different card games -CD
+    Hand hand = new Hand(13); 
 
     //window
     int boardWidth = 1900;
@@ -70,6 +72,7 @@ public class SortCards {
             gamePanel.repaint();
         });
 
+        //these buttons should be added for the games that need them -CD
         shuffleHandButton.addActionListener(e -> {
             shuffle(hand);
         });
@@ -94,6 +97,7 @@ public class SortCards {
         System.out.println(hand);
     }
 
+    //hardcoded for 13 cards -CD
     public void dealHand() { // This takes the 1st 13 cards from deck and puts it in hand.
         for (int i = 0; i < 13; i++) {
             Card card = deck.dealCard();

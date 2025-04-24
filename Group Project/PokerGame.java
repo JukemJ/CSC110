@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class PokerGame {
 
     ArrayList<Card> communityCards = new ArrayList<Card>();
-    Player user = new Player();
+    //Player user = new Player();
     //Player computer = new Player();
-    Deck deck = new Deck();
+    Deck deck = new Deck(5);
 
     public PokerGame() {
         deck.shuffle();
