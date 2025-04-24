@@ -20,7 +20,7 @@ public class Deck {
         int pos = 0;
         for (String suit : Suits) {
             for (String rank : Ranks) {
-                Card card = new Card(rank, suit);
+                Card card = new Card(suit, rank);
                 deck[pos++] = card;
             }
         }
@@ -31,7 +31,11 @@ public class Deck {
         // }
     }
 
-    public Card dealCard() { // doesn't handle empty deck;
+    public Card dealCard() { 
+        
+        if (top >= deck.length) {
+            throw new IllegalStateException("No more cards in the deck.");
+        }
         Card card = deck[top++];
         return card;
     }

@@ -3,15 +3,39 @@ public class Card implements Comparable<Card> {
 
     String rank;
     String suit;
+    int pokerValue; // int value; // 2-10 = 2-10, J=11, Q=12, K=13, A=14
 
+    
     Card(String suit, String rank) {
         this.rank = rank;
         this.suit = suit;
+        
+        switch (rank) {     // 2-10, J, Q, K, A       //just for pokerGame -CD      
+            case "A":
+                this.pokerValue = 14;
+                break;
+            case "K":
+                this.pokerValue = 13;
+                break;
+            case "Q":
+                this.pokerValue = 12;
+                break;
+            case "J":
+                this.pokerValue = 11;
+                break;
+            default:
+                //System.out.println(Integer.parseInt(rank));
+                pokerValue = Integer.parseInt(rank);
+        }
     }
 
     @Override
     public String toString() {
-        return suit + "-" + rank;
+        return rank + "-" + suit;
+    }
+
+    public int getPokerValue() {
+        return pokerValue;
     }
 
     public int getRank() {
@@ -24,12 +48,15 @@ public class Card implements Comparable<Card> {
         return Integer.parseInt(rank); //2-10
     }
 
+    public String getSuit() {
+        return suit;
+    }
+
     public boolean isAce() {
         return rank.equals("A");
     }
 
     public String getImagePath() {
-        //return "C:\\Users\\Chris\\Documents\\skool\\CSC110\\Group Project\\images\\2-C.png";
         return "images/" + toString() + ".png";
     }
 
