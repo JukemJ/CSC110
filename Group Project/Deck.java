@@ -46,10 +46,10 @@ public class Deck {
             exchange(i, j);
         }
 
-        System.out.println("AFTER SHUFFLE");
-        for (Card card : deck) {
-            System.out.println(card);
-        }
+        // System.out.println("AFTER SHUFFLE");
+        // for (Card card : deck) {
+        //     System.out.println(card);
+        // }
     }
 
     public void exchange(int i, int j) {

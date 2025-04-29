@@ -11,6 +11,7 @@ public class PokerGame {
 
     Deck deck = new Deck(52);
     ArrayList<Card> hand = new ArrayList<Card>();
+    boolean[] selectedCards = {false,false,false,false,false};   //keeps track of which cards are selected to keep
 
     // setting window variables
     int boardWidth = 1200;
@@ -43,8 +44,13 @@ public class PokerGame {
     };
     JPanel buttonPanel = new JPanel();
     JButton dealButton = new JButton("Deal");
-    JButton shuffleHandButton = new JButton("Shuffle Hand");
-    JButton shuffleDeckButton = new JButton("Shuffle Deck");
+    JToggleButton keepCard1 = new JToggleButton("Keep Card 1");
+    JToggleButton keepCard2 = new JToggleButton("Keep Card 2");
+    JToggleButton keepCard3 = new JToggleButton("Keep Card 3");
+    JToggleButton keepCard4 = new JToggleButton("Keep Card 4");
+    JToggleButton keepCard5 = new JToggleButton("Keep Card 5");
+    // JButton shuffleHandButton = new JButton("Shuffle Hand");
+    // JButton shuffleDeckButton = new JButton("Shuffle Deck");
 
     public PokerGame() {
         deck.buildDeck();
@@ -66,10 +72,19 @@ public class PokerGame {
     }
 
     public void dealHand() {
-        hand.clear();
-        for (int i = 0; i < 5; i++) {
-            hand.add(deck.dealCard());
+        if(hand.size() == 0){
+            for (int i = 0; i < 5; i++) {
+                hand.add(deck.dealCard());
+            }
         }
+        else {
+            for (int i = 0; i < 5; i++) {
+                if (!selectedCards[i]) {
+                    hand.set(i, deck.dealCard());
+                }
+            }
+        }
+        
         gamePanel.repaint();
     }
 
@@ -203,18 +218,51 @@ public class PokerGame {
 
         dealButton.setFocusable(false);
         buttonPanel.add(dealButton);
-        shuffleHandButton.setFocusable(false);
-        buttonPanel.add(shuffleHandButton);
-        shuffleDeckButton.setFocusable(false);
-        buttonPanel.add(shuffleDeckButton);
+        // shuffleHandButton.setFocusable(false);
+        // buttonPanel.add(shuffleHandButton);
+        // shuffleDeckButton.setFocusable(false);
+        // buttonPanel.add(shuffleDeckButton);
+        keepCard1.setFocusable(false);
+        buttonPanel.add(keepCard1);
+        keepCard2.setFocusable(false);
+        buttonPanel.add(keepCard2);
+        keepCard3.setFocusable(false);
+        buttonPanel.add(keepCard3);
+        keepCard4.setFocusable(false);
+        buttonPanel.add(keepCard4);
+        keepCard5.setFocusable(false);
+        buttonPanel.add(keepCard5);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         dealButton.addActionListener((ActionEvent e) -> {
-            // THIS IS WRONG. ADD CALL TO APPROPRIATE SORT
-            //System.out.println("sortButton.() needs to be edited");
             dealHand();
             System.out.println(getHandType());
             gamePanel.repaint();
+        });
+
+        keepCard1.addActionListener((ActionEvent e) -> {
+            selectedCards[0] = keepCard1.isSelected();
+            System.out.println("Card 1 selected: " + selectedCards[0]);
+        });
+
+        keepCard2.addActionListener((ActionEvent e) -> {
+            selectedCards[1] = keepCard2.isSelected();
+            System.out.println("Card 2 selected: " + selectedCards[1]);
+        });
+
+        keepCard3.addActionListener((ActionEvent e) -> {
+            selectedCards[2] = keepCard3.isSelected();
+            System.out.println("Card 3 selected: " + selectedCards[2]);
+        });
+
+        keepCard4.addActionListener((ActionEvent e) -> {
+            selectedCards[3] = keepCard4.isSelected();
+            System.out.println("Card 4 selected: " + selectedCards[3]);
+        });
+
+        keepCard5.addActionListener((ActionEvent e) -> {
+            selectedCards[4] = keepCard5.isSelected();
+            System.out.println("Card 5 selected: " + selectedCards[4]);
         });
 
         // //these buttons should be added for the games that need them -CD
