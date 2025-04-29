@@ -12,6 +12,11 @@ public class PokerGame {
     Deck deck = new Deck(52);
     ArrayList<Card> hand = new ArrayList<Card>();
     boolean[] selectedCards = {false,false,false,false,false};   //keeps track of which cards are selected to keep
+    int playerScore = 0;
+    String currentHandType = "None";
+
+    //  colors
+    Color backgroundColor = new Color(53, 101, 77); 
 
     // setting window variables
     int boardWidth = 1200;
@@ -21,7 +26,14 @@ public class PokerGame {
     int cardHeight = 220;
 
     JFrame frame = new JFrame("Poker!");
-    JPanel gamePanel = new JPanel() {
+
+    JPanel scoreListPanel = new JPanel();                     // score list panel on the right side of screen
+    
+    JPanel scorePanel = new JPanel();                           //score panel top of screen
+    JLabel scoreLabel = new JLabel("Score: 0");
+    JLabel handTypeLabel = new JLabel("Current Hand: None");
+
+    JPanel gamePanel = new JPanel() {                           // game panel in the middle of screen           
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -34,15 +46,16 @@ public class PokerGame {
                     g.drawImage(cardImg, 20 + (cardWidth + 5) * i, 120, cardWidth, cardHeight, null);
                 }
 
-                // g.setFont(new Font("Arial", Font.PLAIN, 30));
-                // g.setColor(Color.white);
-                // g.drawString(message, 220, 250);
+                //  g.setFont(new Font("Arial", Font.PLAIN, 30));
+                //  g.setColor(Color.white);
+                //  g.drawString("TEST", 0, 0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
-    JPanel buttonPanel = new JPanel();
+
+    JPanel buttonPanel = new JPanel();                      // button panel at the bottom of screen                     
     JButton dealButton = new JButton("Deal");
     JToggleButton keepCard1 = new JToggleButton("Keep Card 1");
     JToggleButton keepCard2 = new JToggleButton("Keep Card 2");
@@ -56,7 +69,7 @@ public class PokerGame {
         deck.buildDeck();
         deck.shuffle();
         dealHand();
-        //displayWelcomeMessage();
+        displayWelcomeMessage();
         drawWindow();
     }
 
@@ -201,6 +214,27 @@ public class PokerGame {
         }
     }
 
+    public void updateScore() {
+        currentHandType = getHandType();
+        
+        // Award points based on hand type
+        switch(currentHandType) {
+            case "Straight Flush": playerScore += 50; break;
+            case "Four of a Kind": playerScore += 25; break;
+            case "Full House": playerScore += 15; break;
+            case "Flush": playerScore += 10; break;
+            case "Straight": playerScore += 8; break;
+            case "Three of a Kind": playerScore += 5; break;
+            case "Two Pair": playerScore += 3; break;
+            case "Pair": playerScore += 1; break;
+            default: break; // No points for high card
+        }
+        
+        // Update the score display
+        scoreLabel.setText("Score: " + playerScore);
+        handTypeLabel.setText("Hand: " + currentHandType);
+    }
+
     // drawing the game window
     // window
 
@@ -212,8 +246,22 @@ public class PokerGame {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        scorePanel.setBackground(new Color(40, 80, 60));
+        scorePanel.setPreferredSize(new Dimension(boardWidth, 50));
+        scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
+
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        scoreLabel.setForeground(Color.WHITE);
+        handTypeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        handTypeLabel.setForeground(Color.WHITE);
+
+        scorePanel.add(scoreLabel);
+        scorePanel.add(handTypeLabel);
+
+        frame.add(scorePanel, BorderLayout.NORTH);
+
         gamePanel.setLayout(new BorderLayout());
-        gamePanel.setBackground(new Color(53, 101, 77));
+        gamePanel.setBackground(backgroundColor);
         frame.add(gamePanel);
 
         dealButton.setFocusable(false);
@@ -236,7 +284,7 @@ public class PokerGame {
 
         dealButton.addActionListener((ActionEvent e) -> {
             dealHand();
-            System.out.println(getHandType());
+            updateScore();
             gamePanel.repaint();
         });
 
