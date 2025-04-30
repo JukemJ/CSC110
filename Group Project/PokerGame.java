@@ -11,12 +11,18 @@ public class PokerGame {
 
     Deck deck = new Deck(52);
     ArrayList<Card> hand = new ArrayList<Card>();
-    boolean[] selectedCards = {false,false,false,false,false};   //keeps track of which cards are selected to keep
+    boolean[] selectedCards = { false, false, false, false, false }; // keeps track of which cards are selected to keep
+    String[] handTypes = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House",
+            "Four of a Kind", "Straight Flush" , "Royal Flush"};
+    int[] handTypeScores = {0, 1, 2, 3, 4, 6, 9, 25, 50, 250};
     int playerScore = 0;
     String currentHandType = "None";
+    Font gameFont = new Font("Arial", Font.BOLD, 20);
+    int turnsRemaining = 3; // number of turns remaining
+    boolean gameOver = false; // flag to check if game is over
 
-    //  colors
-    Color backgroundColor = new Color(53, 101, 77); 
+    // colors
+    Color backgroundColor = new Color(53, 101, 77);
 
     // setting window variables
     int boardWidth = 1200;
@@ -25,15 +31,17 @@ public class PokerGame {
     int cardWidth = 138; // ratio should 1/1.4
     int cardHeight = 220;
 
-    JFrame frame = new JFrame("Poker!");
+    JFrame frame = new JFrame("Video Poker!");
 
-    JPanel scoreListPanel = new JPanel();                     // score list panel on the right side of screen
-    
-    JPanel scorePanel = new JPanel();                           //score panel top of screen
+    JPanel scoreListPanel = new JPanel(); // score list panel on the right side of screen
+
+    JPanel scorePanel = new JPanel(); // score panel top of screen
     JLabel scoreLabel = new JLabel("Score: 0");
     JLabel handTypeLabel = new JLabel("Current Hand: None");
+    JLabel cardsRemainingLabel = new JLabel("Cards Remaining: " + deck.getRemainingCards());
+    JLabel handsRemainingLabel = new JLabel("Hands Remaining: " + turnsRemaining);
 
-    JPanel gamePanel = new JPanel() {                           // game panel in the middle of screen           
+    JPanel gamePanel = new JPanel() { // game panel in the middle of screen
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -43,19 +51,21 @@ public class PokerGame {
                 for (int i = 0; i < 5; i++) {
                     Card card = hand.get(i);
                     Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
-                    g.drawImage(cardImg, 20 + (cardWidth + 5) * i, 120, cardWidth, cardHeight, null);
+                    int yPosition = selectedCards[i] ? 100 : 120; // Move up by 20 pixels if selected
+                    g.drawImage(cardImg, 20 + (cardWidth + 5) * i, yPosition, cardWidth, cardHeight, null);
+                    //g.drawImage(cardImg, 20 + (cardWidth + 5) * i, yPosition, 10, 14, null);
                 }
 
-                //  g.setFont(new Font("Arial", Font.PLAIN, 30));
-                //  g.setColor(Color.white);
-                //  g.drawString("TEST", 0, 0);
+                // g.setFont(new Font("Arial", Font.PLAIN, 30));
+                // g.setColor(Color.white);
+                // g.drawString("TEST", 0, 0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
 
-    JPanel buttonPanel = new JPanel();                      // button panel at the bottom of screen                     
+    JPanel buttonPanel = new JPanel(); // button panel at the bottom of screen
     JButton dealButton = new JButton("Deal");
     JToggleButton keepCard1 = new JToggleButton("Keep Card 1");
     JToggleButton keepCard2 = new JToggleButton("Keep Card 2");
@@ -70,6 +80,8 @@ public class PokerGame {
         deck.shuffle();
         dealHand();
         displayWelcomeMessage();
+
+        // updateScore();
         drawWindow();
     }
 
@@ -82,22 +94,41 @@ public class PokerGame {
         System.out.println("Good luck!");
         System.out.println();
 
+        String message = "Welcome to Poker!\n"
+                + "You will intially be dealt a hand of 5 cards.\n"
+                + "The goal is to get the best hand possible in " + turnsRemaining + " hands\n"
+                + "After your hand is dealt, you can choose which cards to keep and press the Deal button.\n"
+                + "Your other cards will be replaced.\n"
+                + "Good luck!";
+
+        // Display the message in a JOptionPane
+        JOptionPane.showMessageDialog(frame, message, "Welcome", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     public void dealHand() {
-        if(hand.size() == 0){
+        if (hand.size() == 0) {
             for (int i = 0; i < 5; i++) {
                 hand.add(deck.dealCard());
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < 5; i++) {
                 if (!selectedCards[i]) {
                     hand.set(i, deck.dealCard());
                 }
+                else selectedCards[i] = false;                  // reset selected cards for next hand
             }
         }
-        
+                                                        // reset toggle buttons for next hand
+        keepCard1.setSelected(false);
+        keepCard2.setSelected(false);
+        keepCard3.setSelected(false);
+        keepCard4.setSelected(false);   
+        keepCard5.setSelected(false);
+        turnsRemaining--;
+        if(turnsRemaining == 0) {
+            gameOver = true;
+        }
         gamePanel.repaint();
     }
 
@@ -214,30 +245,56 @@ public class PokerGame {
         }
     }
 
-    public void updateScore() {
+    public int getHandScore() {
+
         currentHandType = getHandType();
-        
+
         // Award points based on hand type
-        switch(currentHandType) {
-            case "Straight Flush": playerScore += 50; break;
-            case "Four of a Kind": playerScore += 25; break;
-            case "Full House": playerScore += 15; break;
-            case "Flush": playerScore += 10; break;
-            case "Straight": playerScore += 8; break;
-            case "Three of a Kind": playerScore += 5; break;
-            case "Two Pair": playerScore += 3; break;
-            case "Pair": playerScore += 1; break;
-            default: break; // No points for high card
+        switch (currentHandType) {
+            case "Straight Flush":
+                return 50;
+                
+            case "Four of a Kind":
+                return 25;
+            case "Full House":
+                return 9;
+            case "Flush":
+                return 6;
+            case "Straight":
+                return 4;
+            case "Three of a Kind":
+                return 3;
+            case "Two Pair":
+                return 2;
+            case "Pair":
+                return 1;
+            default:
+                return 0; // No points for high card
         }
-        
-        // Update the score display
+    }
+
+    public void gameOver() {
+        playerScore += getHandScore();
         scoreLabel.setText("Score: " + playerScore);
-        handTypeLabel.setText("Hand: " + currentHandType);
+        String message = "You scored: " + getHandScore() + "\n"
+                + "Your final hand was: " + getHandType() + "\n"
+                + "Play Again?";
+        int newGameChoice = JOptionPane.showConfirmDialog(frame, message, "Game Over", JOptionPane.YES_NO_OPTION);
+        if(newGameChoice == JOptionPane.YES_OPTION) {
+            deck = new Deck(52);
+            deck.buildDeck();
+            deck.shuffle();
+            hand.clear();
+            dealHand();
+            turnsRemaining = 3;
+            gameOver = false;
+        } else {
+            System.exit(0); // Close the application
+        }
+        //System.exit(0); // Close the application
     }
 
     // drawing the game window
-    // window
-
     void drawWindow() {
 
         frame.setVisible(true);
@@ -246,19 +303,11 @@ public class PokerGame {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        scorePanel.setBackground(new Color(40, 80, 60));
-        scorePanel.setPreferredSize(new Dimension(boardWidth, 50));
-        scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
-
-        scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        scoreLabel.setForeground(Color.WHITE);
-        handTypeLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        handTypeLabel.setForeground(Color.WHITE);
-
-        scorePanel.add(scoreLabel);
-        scorePanel.add(handTypeLabel);
-
+        drawScorePanel();
         frame.add(scorePanel, BorderLayout.NORTH);
+
+        drawScoreListPanel();
+        frame.add(scoreListPanel, BorderLayout.EAST);
 
         gamePanel.setLayout(new BorderLayout());
         gamePanel.setBackground(backgroundColor);
@@ -282,47 +331,84 @@ public class PokerGame {
         buttonPanel.add(keepCard5);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
+        // GAME CONTROLS BUTTONS
+
         dealButton.addActionListener((ActionEvent e) -> {
             dealHand();
-            updateScore();
+            handTypeLabel.setText("Hand: " + getHandType());
+            cardsRemainingLabel.setText("Cards Remaining: " + deck.getRemainingCards());
+            handsRemainingLabel.setText("Hands Remaining: " + turnsRemaining);
+            if(gameOver) gameOver();
             gamePanel.repaint();
         });
 
         keepCard1.addActionListener((ActionEvent e) -> {
             selectedCards[0] = keepCard1.isSelected();
-            System.out.println("Card 1 selected: " + selectedCards[0]);
+            gamePanel.repaint();
+            // System.out.println("Card 1 selected: " + selectedCards[0]);
         });
 
         keepCard2.addActionListener((ActionEvent e) -> {
             selectedCards[1] = keepCard2.isSelected();
-            System.out.println("Card 2 selected: " + selectedCards[1]);
+            gamePanel.repaint();
+            // System.out.println("Card 2 selected: " + selectedCards[1]);
         });
 
         keepCard3.addActionListener((ActionEvent e) -> {
             selectedCards[2] = keepCard3.isSelected();
-            System.out.println("Card 3 selected: " + selectedCards[2]);
+            gamePanel.repaint();
+            // System.out.println("Card 3 selected: " + selectedCards[2]);
         });
 
         keepCard4.addActionListener((ActionEvent e) -> {
             selectedCards[3] = keepCard4.isSelected();
-            System.out.println("Card 4 selected: " + selectedCards[3]);
+            gamePanel.repaint();
+            // System.out.println("Card 4 selected: " + selectedCards[3]);
         });
 
         keepCard5.addActionListener((ActionEvent e) -> {
             selectedCards[4] = keepCard5.isSelected();
-            System.out.println("Card 5 selected: " + selectedCards[4]);
+            gamePanel.repaint();
+            // System.out.println("Card 5 selected: " + selectedCards[4]);
         });
 
-        // //these buttons should be added for the games that need them -CD
-        // shuffleHandButton.addActionListener(e -> {
-        //     shuffle(hand);
-        // });
-
-        // shuffleDeckButton.addActionListener(e -> {
-        //     hand = null;              // get rid of old hand
-        //     hand = new Hand(13); // create new empty hand
-        //     shuffle(deck);
-        //     dealHand();
-        // });
     }
+
+    void drawScoreListPanel() {
+        scoreListPanel.setBackground(new Color(40, 80, 60));
+        scoreListPanel.setPreferredSize(new Dimension(300, boardHeight));
+
+        // Set the layout to BoxLayout for vertical alignment
+        scoreListPanel.setLayout(new BoxLayout(scoreListPanel, BoxLayout.Y_AXIS));
+
+        for (int i = handTypes.length - 1; i >= 0; i--) {
+            JLabel handTypeLabel = new JLabel(handTypes[i] + ": " + handTypeScores[i]);
+            handTypeLabel.setFont(gameFont);
+            handTypeLabel.setForeground(Color.WHITE);
+            handTypeLabel.setAlignmentX(Component.LEFT_ALIGNMENT); // Align labels to the left
+            scoreListPanel.add(handTypeLabel);
+            scoreListPanel.add(Box.createVerticalStrut(10)); // Add spacing between labels
+        }
+    }
+
+    void drawScorePanel() {
+        scorePanel.setBackground(new Color(40, 80, 60));
+        scorePanel.setPreferredSize(new Dimension(boardWidth, 50));
+        scorePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
+
+        scoreLabel.setFont(gameFont);
+        scoreLabel.setForeground(Color.WHITE);
+        cardsRemainingLabel.setFont(gameFont);
+        cardsRemainingLabel.setForeground(Color.WHITE);
+        handsRemainingLabel.setFont(gameFont);
+        handsRemainingLabel.setForeground(Color.WHITE);
+        handTypeLabel.setFont(gameFont);
+        handTypeLabel.setForeground(Color.WHITE);
+
+        scorePanel.add(scoreLabel);
+        scorePanel.add(handTypeLabel);
+        scorePanel.add(handsRemainingLabel);
+        scorePanel.add(cardsRemainingLabel);
+    }
+
 }

@@ -57,4 +57,8 @@ public class Deck {
         deck[i] = deck[j];
         deck[j] = currCard;
     }
+
+    public int getRemainingCards() {
+        return deck.length - top;
+    }   
 }
