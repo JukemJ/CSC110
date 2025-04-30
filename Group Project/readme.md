@@ -32,4 +32,4 @@ Run the project using the following command:
 This project is licensed under the [License Name]. See the [LICENSE](LICENSE) file for details. -->
 
 <!-- ## Acknowledgments
-- [Any resources, tools, or individuals you'd like to thank] -->
+- [Any resources, tools, or individuals you'd like to thank] --> 
