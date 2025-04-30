@@ -1,3 +1,5 @@
+// Chris Dixon
+// Ary Sanchez
 
 import java.util.Random;
 

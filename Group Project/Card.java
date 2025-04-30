@@ -1,3 +1,5 @@
+// Chris Dixon
+// Ary Sanchez
 
 public class Card implements Comparable<Card> {
 

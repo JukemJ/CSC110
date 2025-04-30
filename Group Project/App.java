@@ -1,4 +1,5 @@
 // Chris Dixon
+// Ary Sanchez
 
 import javax.swing.JOptionPane;
 

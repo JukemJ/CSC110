@@ -1,4 +1,7 @@
 // Chris Dixon
+// Ary Sanchez
+
+// Video Poker Game
 
 import java.util.ArrayList;
 import java.awt.*;
@@ -11,15 +14,15 @@ public class PokerGame {
 
     Deck deck = new Deck(52);
     ArrayList<Card> hand = new ArrayList<Card>();
-    boolean[] selectedCards = { false, false, false, false, false }; // keeps track of which cards are selected to keep
-    String[] handTypes = { "High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House",
+    boolean[] selectedCards = {false, false, false, false, false}; // keeps track of which cards are selected to keep
+    String[] handTypes = {"High Card", "Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House",
             "Four of a Kind", "Straight Flush" , "Royal Flush"};
     int[] handTypeScores = {0, 1, 2, 3, 4, 6, 9, 25, 50, 250};
     int playerScore = 0;
     String currentHandType = "None";
     Font gameFont = new Font("Arial", Font.BOLD, 20);
-    int turnsRemaining = 3; // number of turns remaining
-    boolean gameOver = false; // flag to check if game is over
+    int turnsRemaining = 3;          // number of turns remaining
+    boolean gameOver = false;        // flag to check if game is over
 
     // colors
     Color backgroundColor = new Color(53, 101, 77);
